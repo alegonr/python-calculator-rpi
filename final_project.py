@@ -3,11 +3,9 @@ import RPi.GPIO as GPIO # manages rpi pins
 import drivers          # manages lcd
 import time             # to use sleep function 
 
-
 display = drivers.Lcd() # creating lcd object
 
-# these GPIO pins are connected to the keypad
-# change these according to your connections!
+# defining GPIO pins in Raspberry pi
 L1 = 25
 L2 = 8
 L3 = 7
@@ -18,7 +16,7 @@ C2 = 16
 C3 = 20
 C4 = 21
 
-# Initialize the GPIO pins
+# Initializing the GPIO pins
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
@@ -28,18 +26,14 @@ GPIO.setup(L2, GPIO.OUT)
 GPIO.setup(L3, GPIO.OUT)
 GPIO.setup(L4, GPIO.OUT)
 
-# Make sure to configure the input pins to use the internal pull-down resistors
+# Pull-down resistors
 
 GPIO.setup(C1, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.setup(C2, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.setup(C3, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.setup(C4, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
-# The readLine function implements the procedure discussed in the article
-# It sends out a single pulse to one of the rows of the keypad
-# and then checks each column for changes
-# If it detects a change, the user pressed the button that connects the given line
-# to the detected column
+# Detecting key pressed by sending a single pulse
 
 def readLine(line, characters):
     GPIO.output(line, GPIO.HIGH)
@@ -59,7 +53,7 @@ def readLine(line, characters):
 
 try:
     while True:
-        # call the readLine function for each row of the keypad
+        # calling the readLine function for each row of the keypad
         readLine(L1, ["1","2","3","A"])
         readLine(L2, ["4","5","6","B"])
         readLine(L3, ["7","8","9","C"])
